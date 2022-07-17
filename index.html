@@ -176,7 +176,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-17 18:23:30 / 修改时间：20:51:07" itemprop="dateCreated datePublished" datetime="2022-07-17T18:23:30+08:00">2022-07-17</time>
+              <time title="创建时间：2022-07-17 18:23:30 / 修改时间：20:53:51" itemprop="dateCreated datePublished" datetime="2022-07-17T18:23:30+08:00">2022-07-17</time>
             </span>
 
           
@@ -206,12 +206,7 @@
 <p>返回类型可以省略，参数类型可以用 <code>..</code> 表示，类全路径、方法名称用 <code>.</code> 隔开；</p>
 <hr>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.2.22.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.aspectj&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.9.6&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;aspectj&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aspectjrt&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.5.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">#### 被增强的类  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>import org.springframework.stereotype.Component;<br>@Component<br>public class User {</p>
-<pre><code>public void add(int a,int b)&#123;
-    System.out.println(&quot;add--&quot;+a+b);
-&#125;
-</code></pre>
-<p>}</p>
+<p>import org.springframework.stereotype.Component;<br>@Component<br>public class User {<br>    public void add(int a,int b){<br>        System.out.println(“add–”+a+b);<br>    }<br>}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 增强类</span><br></pre></td></tr></table></figure>
 <p>import org.aspectj.lang.annotation.Before;<br>import org.springframework.stereotype.Component;<br>import org.aspectj.lang.annotation.Aspect;<br>@Component<br>@Aspect<br>public class UserProxy {<br>&#x2F;&#x2F;ProceedingJoinPoint is only supported for around advice<br>    &#x2F;&#x2F; 前置通知<br>    @Before(value &#x3D; “execution(* org.chengdu.aopanno.User.add(..))”)<br>    public void before(){<br>        System.out.println(“before method –”);<br>    }<br>}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 配置文件  </span><br></pre></td></tr></table></figure>
@@ -222,30 +217,13 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"></p>
-<pre><code>&lt;context:component-scan base-package=&quot;org.chengdu.aopanno&quot; /&gt;
-&lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;
-</code></pre>
-</beans>
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"><br>    &lt;context:component-scan base-package&#x3D;”org.chengdu.aopanno” &#x2F;&gt;<br>    <a href="aop:aspectj-autoproxy">aop:aspectj-autoproxy</a></aop:aspectj-autoproxy><br></beans></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">#### 测试  </span><br></pre></td></tr></table></figure>
-public class Test {
-    public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
-        User user = context.getBean("user", User.class);
-        user.add(3,2);
-    }
-}
+<p>public class Test {<br>    public static void main(String[] args) {<br>        ApplicationContext context &#x3D; new ClassPathXmlApplicationContext(“bean.xml”);<br>        User user &#x3D; context.getBean(“user”, User.class);<br>        user.add(3,2);<br>    }<br>}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#### 也可以将execution表达式提取出来  </span><br></pre></td></tr></table></figure>
-@Pointcut(value = "execution(* org.chengdu.aopanno.User.add(..))")
-public void pointcut(){}
+<p>@Pointcut(value &#x3D; “execution(* org.chengdu.aopanno.User.add(..))”)<br>public void pointcut(){}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 全部通知类型  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-@Component
-@Aspect
-public class UserProxy {
-    //ProceedingJoinPoint is only supported for around advice
-    @Pointcut(value = "execution(* org.chengdu.aopanno.User.add(..))")
-    public void pointcut(){}
-
+<p>@Component<br>@Aspect<br>public class UserProxy {<br>    &#x2F;&#x2F;ProceedingJoinPoint is only supported for around advice<br>    @Pointcut(value &#x3D; “execution(* org.chengdu.aopanno.User.add(..))”)<br>    public void pointcut(){}</p>
 <pre><code>// 前置通知
 @Before(value = &quot;pointcut()&quot;)
 public void before()&#123;
