@@ -176,7 +176,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-25 11:36:53 / 修改时间：13:01:10" itemprop="dateCreated datePublished" datetime="2022-07-25T11:36:53+08:00">2022-07-25</time>
+              <time title="创建时间：2022-07-25 11:36:53 / 修改时间：13:03:41" itemprop="dateCreated datePublished" datetime="2022-07-25T11:36:53+08:00">2022-07-25</time>
             </span>
 
           
@@ -192,154 +192,36 @@
       
           <h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>SPI 全称为 Service Provider Interface，服务提供者接口，是一种服务发现机制  </p>
 <h3 id="JDKSPI的使用"><a href="#JDKSPI的使用" class="headerlink" title="JDKSPI的使用"></a>JDKSPI的使用</h3><p>创建一个接口  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface Log &#123;</span><br><span class="line">    void info();</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">实现类  </span><br></pre></td></tr></table></figure>
-<p>public class DemoLog implements Log{<br>    @Override<br>    public void info() {<br>        System.out.println(“print DemoLog—“);<br>    }<br>}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">配置文件  </span><br><span class="line">META-INF/services/ 下创建接口全类名的文件，里面写接口实现类的全类名  </span><br><span class="line">比如我这里创建的文件是：com.cheng.demo.Log；  </span><br><span class="line">内容是：  </span><br></pre></td></tr></table></figure>
-<p>com.cheng.demo.DemoLog</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main方法  </span><br></pre></td></tr></table></figure>
-<p>import java.util.ServiceLoader;<br>public class Main {<br>    public static void main(String[] args) {<br>        ServiceLoader<Log> serviceLoader &#x3D; ServiceLoader.load(Log.class);<br>        for (Log log : serviceLoader) {<br>            log.info();<br>        }<br>    }<br>}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">运行main方法，发现其可以调用到接口实现类中的方法  </span><br><span class="line"></span><br><span class="line">### JDK 中ServiceLoader类解读  </span><br><span class="line">通过ServiceLoader.load(Log.class) 方法获取ServiceLoader；load方法中，获取当前线程的ClassLoader（类加载器）  </span><br></pre></td></tr></table></figure>
-<p>public static <S> ServiceLoader<S> load(Class<S> service) {<br>    ClassLoader cl &#x3D; Thread.currentThread().getContextClassLoader();<br>    return ServiceLoader.load(service, cl);<br>}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">load重载方法中,返回一个ServiceLoader对象  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>public static <S> ServiceLoader<S> load(Class<S> service,<br>                                        ClassLoader loader)<br>{<br>    return new ServiceLoader&lt;&gt;(service, loader);<br>}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对其成员变量赋值</span><br><span class="line">调用reload  </span><br></pre></td></tr></table></figure>
-<pre><code>private ServiceLoader(Class&lt;S&gt; svc, ClassLoader cl) &#123;
-    service = Objects.requireNonNull(svc, &quot;Service interface cannot be null&quot;);
-    loader = (cl == null) ? ClassLoader.getSystemClassLoader() : cl;
-    acc = (System.getSecurityManager() != null) ? AccessController.getContext() : null;
-    reload();
-&#125;
-</code></pre>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reload方法中，清空服务提供者这个map，就是providers  </span><br><span class="line">给lookupIterator赋值  </span><br></pre></td></tr></table></figure>
-<pre><code>public void reload() &#123;
-    providers.clear();
-    lookupIterator = new LazyIterator(service, loader);
-&#125;
-</code></pre>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">使用获取到的ServiceLoader对象访问服务时，使用serviceLoader.iterator()</span><br><span class="line">返回的是匿名内部类;</span><br><span class="line">其中lookupIterator是LazyIterator类对象，LazyIterator类实现了Iterator接口  </span><br><span class="line">后续使用iterator.hasNext()进行访问时，实际调用的是LazyIterator类中实现的next方法  </span><br></pre></td></tr></table></figure>
-<pre><code>public Iterator&lt;S&gt; iterator() &#123;
-    return new Iterator&lt;S&gt;() &#123;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Log &#123;</span><br><span class="line">    void info();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现类  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class DemoLog implements Log&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void info() &#123;</span><br><span class="line">        System.out.println(&quot;print DemoLog---&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置文件<br>META-INF&#x2F;services&#x2F; 下创建接口全类名的文件，里面写接口实现类的全类名<br>比如我这里创建的文件是：com.cheng.demo.Log；<br>内容是：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.cheng.demo.DemoLog</span><br></pre></td></tr></table></figure>
 
-        Iterator&lt;Map.Entry&lt;String,S&gt;&gt; knownProviders
-            = providers.entrySet().iterator();
+<p>main方法  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import java.util.ServiceLoader;</span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ServiceLoader&lt;Log&gt; serviceLoader = ServiceLoader.load(Log.class);</span><br><span class="line">        for (Log log : serviceLoader) &#123;</span><br><span class="line">            log.info();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        public boolean hasNext() &#123;
-            if (knownProviders.hasNext())
-                return true;
-            return lookupIterator.hasNext();
-        &#125;
+<p>运行main方法，发现其可以调用到接口实现类中的方法  </p>
+<h3 id="JDK-中ServiceLoader类解读"><a href="#JDK-中ServiceLoader类解读" class="headerlink" title="JDK 中ServiceLoader类解读"></a>JDK 中ServiceLoader类解读</h3><p>通过ServiceLoader.load(Log.class) 方法获取ServiceLoader；load方法中，获取当前线程的ClassLoader（类加载器）  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;S&gt; ServiceLoader&lt;S&gt; load(Class&lt;S&gt; service) &#123;</span><br><span class="line">    ClassLoader cl = Thread.currentThread().getContextClassLoader();</span><br><span class="line">    return ServiceLoader.load(service, cl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        public S next() &#123;
-            if (knownProviders.hasNext())
-                return knownProviders.next().getValue();
-            return lookupIterator.next();
-        &#125;
+<p>load重载方法中,返回一个ServiceLoader对象  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;S&gt; ServiceLoader&lt;S&gt; load(Class&lt;S&gt; service,</span><br><span class="line">                                        ClassLoader loader)</span><br><span class="line">&#123;</span><br><span class="line">    return new ServiceLoader&lt;&gt;(service, loader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        public void remove() &#123;
-            throw new UnsupportedOperationException();
-        &#125;
+<p>对其成员变量赋值<br>调用reload  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private ServiceLoader(Class&lt;S&gt; svc, ClassLoader cl) &#123;</span><br><span class="line">    service = Objects.requireNonNull(svc, &quot;Service interface cannot be null&quot;);</span><br><span class="line">    loader = (cl == null) ? ClassLoader.getSystemClassLoader() : cl;</span><br><span class="line">    acc = (System.getSecurityManager() != null) ? AccessController.getContext() : null;</span><br><span class="line">    reload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    &#125;;
-&#125;
-</code></pre>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LazyIterator 私有内部类</span><br><span class="line"></span><br><span class="line">直到调用到nextService方法时，才会真正创建类对象</span><br></pre></td></tr></table></figure>
-<p>private class LazyIterator<br>        implements Iterator<S><br>    {</p>
-<pre><code>    Class&lt;S&gt; service;
-    ClassLoader loader;
-    Enumeration&lt;URL&gt; configs = null;
-    Iterator&lt;String&gt; pending = null;
-    String nextName = null;
+<p>reload方法中，清空服务提供者这个map，就是providers<br>给lookupIterator赋值  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void reload() &#123;</span><br><span class="line">    providers.clear();</span><br><span class="line">    lookupIterator = new LazyIterator(service, loader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    private LazyIterator(Class&lt;S&gt; service, ClassLoader loader) &#123;
-        this.service = service;
-        this.loader = loader;
-    &#125;
+<p>使用获取到的ServiceLoader对象访问服务时，使用serviceLoader.iterator()<br>返回的是匿名内部类;<br>其中lookupIterator是LazyIterator类对象，LazyIterator类实现了Iterator接口<br>后续使用iterator.hasNext()进行访问时，实际调用的是LazyIterator类中实现的next方法  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public Iterator&lt;S&gt; iterator() &#123;</span><br><span class="line">    return new Iterator&lt;S&gt;() &#123;</span><br><span class="line"></span><br><span class="line">        Iterator&lt;Map.Entry&lt;String,S&gt;&gt; knownProviders</span><br><span class="line">            = providers.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">        public boolean hasNext() &#123;</span><br><span class="line">            if (knownProviders.hasNext())</span><br><span class="line">                return true;</span><br><span class="line">            return lookupIterator.hasNext();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public S next() &#123;</span><br><span class="line">            if (knownProviders.hasNext())</span><br><span class="line">                return knownProviders.next().getValue();</span><br><span class="line">            return lookupIterator.next();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void remove() &#123;</span><br><span class="line">            throw new UnsupportedOperationException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-    private boolean hasNextService() &#123;
-        if (nextName != null) &#123;
-            return true;
-        &#125;
-        if (configs == null) &#123;
-            try &#123;
-                String fullName = PREFIX + service.getName();
-                if (loader == null)
-                    configs = ClassLoader.getSystemResources(fullName);
-                else
-                    configs = loader.getResources(fullName);
-            &#125; catch (IOException x) &#123;
-                fail(service, &quot;Error locating configuration files&quot;, x);
-            &#125;
-        &#125;
-        while ((pending == null) || !pending.hasNext()) &#123;
-            if (!configs.hasMoreElements()) &#123;
-                return false;
-            &#125;
-            pending = parse(service, configs.nextElement());
-        &#125;
-        nextName = pending.next();
-        return true;
-    &#125;
-
-    private S nextService() &#123;
-        if (!hasNextService())
-            throw new NoSuchElementException();
-        String cn = nextName;
-        nextName = null;
-        Class&lt;?&gt; c = null;
-        try &#123;
-            c = Class.forName(cn, false, loader);
-        &#125; catch (ClassNotFoundException x) &#123;
-            fail(service,
-                 &quot;Provider &quot; + cn + &quot; not found&quot;);
-        &#125;
-        if (!service.isAssignableFrom(c)) &#123;
-            fail(service,
-                 &quot;Provider &quot; + cn  + &quot; not a subtype&quot;);
-        &#125;
-        try &#123;
-            S p = service.cast(c.newInstance());
-            providers.put(cn, p);
-            return p;
-        &#125; catch (Throwable x) &#123;
-            fail(service,
-                 &quot;Provider &quot; + cn + &quot; could not be instantiated&quot;,
-                 x);
-        &#125;
-        throw new Error();          // This cannot happen
-    &#125;
-
-    public boolean hasNext() &#123;
-        if (acc == null) &#123;
-            return hasNextService();
-        &#125; else &#123;
-            PrivilegedAction&lt;Boolean&gt; action = new PrivilegedAction&lt;Boolean&gt;() &#123;
-                public Boolean run() &#123; return hasNextService(); &#125;
-            &#125;;
-            return AccessController.doPrivileged(action, acc);
-        &#125;
-    &#125;
-
-    public S next() &#123;
-        if (acc == null) &#123;
-            return nextService();
-        &#125; else &#123;
-            PrivilegedAction&lt;S&gt; action = new PrivilegedAction&lt;S&gt;() &#123;
-                public S run() &#123; return nextService(); &#125;
-            &#125;;
-            return AccessController.doPrivileged(action, acc);
-        &#125;
-    &#125;
-
-    public void remove() &#123;
-        throw new UnsupportedOperationException();
-    &#125;
-
-&#125;
-</code></pre>
-<pre><code>---  
-
-JDK中SPI的实现只是一个简单是实现；
-</code></pre>
+<p>LazyIterator 私有内部类</p>
+<p>直到调用到nextService方法时，才会真正创建类对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">private class LazyIterator</span><br><span class="line">        implements Iterator&lt;S&gt;</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        Class&lt;S&gt; service;</span><br><span class="line">        ClassLoader loader;</span><br><span class="line">        Enumeration&lt;URL&gt; configs = null;</span><br><span class="line">        Iterator&lt;String&gt; pending = null;</span><br><span class="line">        String nextName = null;</span><br><span class="line"></span><br><span class="line">        private LazyIterator(Class&lt;S&gt; service, ClassLoader loader) &#123;</span><br><span class="line">            this.service = service;</span><br><span class="line">            this.loader = loader;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private boolean hasNextService() &#123;</span><br><span class="line">            if (nextName != null) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            if (configs == null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    String fullName = PREFIX + service.getName();</span><br><span class="line">                    if (loader == null)</span><br><span class="line">                        configs = ClassLoader.getSystemResources(fullName);</span><br><span class="line">                    else</span><br><span class="line">                        configs = loader.getResources(fullName);</span><br><span class="line">                &#125; catch (IOException x) &#123;</span><br><span class="line">                    fail(service, &quot;Error locating configuration files&quot;, x);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            while ((pending == null) || !pending.hasNext()) &#123;</span><br><span class="line">                if (!configs.hasMoreElements()) &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                pending = parse(service, configs.nextElement());</span><br><span class="line">            &#125;</span><br><span class="line">            nextName = pending.next();</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private S nextService() &#123;</span><br><span class="line">            if (!hasNextService())</span><br><span class="line">                throw new NoSuchElementException();</span><br><span class="line">            String cn = nextName;</span><br><span class="line">            nextName = null;</span><br><span class="line">            Class&lt;?&gt; c = null;</span><br><span class="line">            try &#123;</span><br><span class="line">                c = Class.forName(cn, false, loader);</span><br><span class="line">            &#125; catch (ClassNotFoundException x) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     &quot;Provider &quot; + cn + &quot; not found&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (!service.isAssignableFrom(c)) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     &quot;Provider &quot; + cn  + &quot; not a subtype&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                S p = service.cast(c.newInstance());</span><br><span class="line">                providers.put(cn, p);</span><br><span class="line">                return p;</span><br><span class="line">            &#125; catch (Throwable x) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     &quot;Provider &quot; + cn + &quot; could not be instantiated&quot;,</span><br><span class="line">                     x);</span><br><span class="line">            &#125;</span><br><span class="line">            throw new Error();          // This cannot happen</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean hasNext() &#123;</span><br><span class="line">            if (acc == null) &#123;</span><br><span class="line">                return hasNextService();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                PrivilegedAction&lt;Boolean&gt; action = new PrivilegedAction&lt;Boolean&gt;() &#123;</span><br><span class="line">                    public Boolean run() &#123; return hasNextService(); &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">                return AccessController.doPrivileged(action, acc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public S next() &#123;</span><br><span class="line">            if (acc == null) &#123;</span><br><span class="line">                return nextService();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                PrivilegedAction&lt;S&gt; action = new PrivilegedAction&lt;S&gt;() &#123;</span><br><span class="line">                    public S run() &#123; return nextService(); &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">                return AccessController.doPrivileged(action, acc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void remove() &#123;</span><br><span class="line">            throw new UnsupportedOperationException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>JDK中SPI的实现只是一个简单是实现；</p>
 
       
     </div>
