@@ -176,7 +176,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-25 11:36:53 / 修改时间：11:37:43" itemprop="dateCreated datePublished" datetime="2022-07-25T11:36:53+08:00">2022-07-25</time>
+              <time title="创建时间：2022-07-25 11:36:53 / 修改时间：13:01:10" itemprop="dateCreated datePublished" datetime="2022-07-25T11:36:53+08:00">2022-07-25</time>
             </span>
 
           
@@ -192,7 +192,7 @@
       
           <h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>SPI 全称为 Service Provider Interface，服务提供者接口，是一种服务发现机制  </p>
 <h3 id="JDKSPI的使用"><a href="#JDKSPI的使用" class="headerlink" title="JDKSPI的使用"></a>JDKSPI的使用</h3><p>创建一个接口  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface Log &#123;</span><br><span class="line">    void info();</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">实现类  </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface Log &#123;</span><br><span class="line">    void info();</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">实现类  </span><br></pre></td></tr></table></figure>
 <p>public class DemoLog implements Log{<br>    @Override<br>    public void info() {<br>        System.out.println(“print DemoLog—“);<br>    }<br>}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">配置文件  </span><br><span class="line">META-INF/services/ 下创建接口全类名的文件，里面写接口实现类的全类名  </span><br><span class="line">比如我这里创建的文件是：com.cheng.demo.Log；  </span><br><span class="line">内容是：  </span><br></pre></td></tr></table></figure>
 <p>com.cheng.demo.DemoLog</p>
