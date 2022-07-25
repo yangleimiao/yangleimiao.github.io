@@ -20,28 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Cheng&#39;s daily">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="SPISPI 全称为 Service Provider Interface，服务提供者接口，是一种服务发现机制   JDKSPI的使用创建一个接口   12345public interface Log &amp;#123;    void info();&amp;#125;&#96;&#96;&#96;  实现类   public class DemoLog implements Log{    @Override    public">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK SPI 的简单理解">
+<meta property="og:url" content="http://example.com/2022/07/25/JDK-SPI/index.html">
 <meta property="og:site_name" content="Cheng&#39;s daily">
+<meta property="og:description" content="SPISPI 全称为 Service Provider Interface，服务提供者接口，是一种服务发现机制   JDKSPI的使用创建一个接口   12345public interface Log &amp;#123;    void info();&amp;#125;&#96;&#96;&#96;  实现类   public class DemoLog implements Log{    @Override    public">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-25T03:36:53.000Z">
+<meta property="article:modified_time" content="2022-07-25T03:37:43.642Z">
 <meta property="article:author" content="Cheng Du">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2022/07/25/JDK-SPI/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Cheng's daily</title>
+  <title>JDK SPI 的简单理解 | Cheng's daily</title>
   
 
 
@@ -145,9 +149,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -163,10 +168,9 @@
       <meta itemprop="name" content="Cheng's daily">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/JDK-SPI/" class="post-title-link" itemprop="url">JDK SPI 的简单理解</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          JDK SPI 的简单理解
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -190,7 +194,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>SPI 全称为 Service Provider Interface，服务提供者接口，是一种服务发现机制  </p>
+        <h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>SPI 全称为 Service Provider Interface，服务提供者接口，是一种服务发现机制  </p>
 <h3 id="JDKSPI的使用"><a href="#JDKSPI的使用" class="headerlink" title="JDKSPI的使用"></a>JDKSPI的使用</h3><p>创建一个接口  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface Log &#123;</span><br><span class="line">    void info();</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">实现类  </span><br></pre></td></tr></table></figure>
 <p>public class DemoLog implements Log{<br>    @Override<br>    public void info() {<br>        System.out.println(“print DemoLog—“);<br>    }<br>}</p>
@@ -341,106 +345,30 @@
 JDK中SPI的实现只是一个简单是实现；
 </code></pre>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/17/spring-aop/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cheng Du">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cheng's daily">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/17/spring-aop/" class="post-title-link" itemprop="url">spring aop简单使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-07-17 18:23:30 / 修改时间：22:36:53" itemprop="dateCreated datePublished" datetime="2022-07-17T18:23:30+08:00">2022-07-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="AOP中的概念"><a href="#AOP中的概念" class="headerlink" title="AOP中的概念"></a>AOP中的概念</h3><h4 id="连接点"><a href="#连接点" class="headerlink" title="连接点"></a>连接点</h4><p>类中可以被增强的方法称为连接点；  </p>
-<h4 id="切入点"><a href="#切入点" class="headerlink" title="切入点"></a>切入点</h4><p>实际被增强的方法，称为切入点；  </p>
-<h4 id="通知（增强）"><a href="#通知（增强）" class="headerlink" title="通知（增强）"></a>通知（增强）</h4><p>实际增强的逻辑部分，也称为通知；<br>通知类型有多种，指增强的逻辑部分执行的位置：  </p>
-<ul>
-<li>前置通知：方法执行之前先执行增强的逻辑；  </li>
-<li>后置通知：方法执行之后再执行增强的逻辑（如果执行中发生异常，这里就不会执行）；  </li>
-<li>环绕通知：方法执行之前和之后都执行增强的逻辑；  </li>
-<li>异常通知：方法执行发生异常才执行增强的逻辑；  </li>
-<li>最终通知：相当于try catch finally中的的finally，有没有异常都会执行；</li>
-</ul>
-<h4 id="切面：可以当做把通知应用到切入点的过程；"><a href="#切面：可以当做把通知应用到切入点的过程；" class="headerlink" title="切面：可以当做把通知应用到切入点的过程；"></a>切面：可以当做把通知应用到切入点的过程；</h4><hr>
-<h3 id="Spring-AOP操作"><a href="#Spring-AOP操作" class="headerlink" title="Spring AOP操作"></a>Spring AOP操作</h3><p>Spring中一般基于AspectJ实现AOP操作</p>
-<p>切入点表达式<br>语法：execution([权限修饰符][返回类型] [类全路径] <a href="%5B%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8%5D">方法名称</a>)<br>举例：<code>execution(* com.demo.dao.User.add(..)) </code>   </p>
-<p>返回类型可以省略，参数类型可以用 <code>..</code> 表示，类全路径、方法名称用 <code>.</code> 隔开；</p>
-<hr>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.2.22.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.aspectj&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.9.6&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/aspectj/aspectjrt --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;aspectj&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aspectjrt&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.5.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="被增强的类"><a href="#被增强的类" class="headerlink" title="被增强的类"></a>被增强的类</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">@Component</span><br><span class="line">public class User &#123;</span><br><span class="line">    public void add(int a,int b)&#123;</span><br><span class="line">        System.out.println(&quot;add--&quot;+a+b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="增强类"><a href="#增强类" class="headerlink" title="增强类"></a>增强类</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import org.aspectj.lang.annotation.Before;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">@Component</span><br><span class="line">@Aspect</span><br><span class="line">public class UserProxy &#123;</span><br><span class="line">//ProceedingJoinPoint is only supported for around advice</span><br><span class="line">    // 前置通知</span><br><span class="line">    @Before(value = &quot;execution(* org.chengdu.aopanno.User.add(..))&quot;)</span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;before method --&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd</span><br><span class="line">       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;</span><br><span class="line">    &lt;context:component-scan base-package=&quot;org.chengdu.aopanno&quot; /&gt;</span><br><span class="line">    &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean.xml&quot;);</span><br><span class="line">        User user = context.getBean(&quot;user&quot;, User.class);</span><br><span class="line">        user.add(3,2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="也可以将execution表达式提取出来"><a href="#也可以将execution表达式提取出来" class="headerlink" title="也可以将execution表达式提取出来"></a>也可以将execution表达式提取出来</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Pointcut(value = &quot;execution(* org.chengdu.aopanno.User.add(..))&quot;)</span><br><span class="line">public void pointcut()&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="全部通知类型"><a href="#全部通知类型" class="headerlink" title="全部通知类型"></a>全部通知类型</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Aspect</span><br><span class="line">public class UserProxy &#123;</span><br><span class="line">    //ProceedingJoinPoint is only supported for around advice</span><br><span class="line">    @Pointcut(value = &quot;execution(* org.chengdu.aopanno.User.add(..))&quot;)</span><br><span class="line">    public void pointcut()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    // 前置通知</span><br><span class="line">    @Before(value = &quot;pointcut()&quot;)</span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;before method --&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    // 后置通知</span><br><span class="line">    @AfterReturning(value = &quot;pointcut()&quot;)</span><br><span class="line">    public void afterReturning()&#123;</span><br><span class="line">        System.out.println(&quot;after method return --&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 最终通知 相当于finally</span><br><span class="line">    @After(value = &quot;pointcut()&quot;)</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after method --&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    // 异常通知</span><br><span class="line">    @AfterThrowing(value = &quot;pointcut()&quot;)</span><br><span class="line">    public void afterThrowing()&#123;</span><br><span class="line">        System.out.println(&quot;afterThrowing --&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Around(value = &quot;pointcut()&quot;)</span><br><span class="line">    public void around(ProceedingJoinPoint joinPoint) throws Throwable &#123;</span><br><span class="line">        System.out.println(&quot;around method [&quot;+joinPoint.getSignature().getName()+&quot;] --before&quot;);</span><br><span class="line">        joinPoint.proceed();</span><br><span class="line">        System.out.println(&quot;around method [&quot;+joinPoint.getSignature().getName()+&quot;] --end&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>ProceedingJoinPoint</code> 可以获取方法名称、参数、返回值等，只能在环绕通知Around中使用；  </p>
-<h4 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h4><p>如果没有异常，则异常通知不会执行；<br>如果发生异常，则后置通知不会执行；后置通知一般指afterReturning  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">around method [add] --before</span><br><span class="line">before method --</span><br><span class="line">add--5</span><br><span class="line">after method return --</span><br><span class="line">after method --</span><br><span class="line">around method [add] --end</span><br></pre></td></tr></table></figure>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/17/spring-aop/" rel="prev" title="spring aop简单使用">
+      <i class="fa fa-chevron-left"></i> spring aop简单使用
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -493,6 +421,7 @@ JDK中SPI的实现只是一个简单是实现；
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPI"><span class="nav-number">1.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDKSPI%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">JDKSPI的使用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
